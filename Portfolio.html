@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filu Minta Tom - National Level Portfolio</title>
+  <style>
+    /* Base Reset & Typography */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f6;
+      color: #4b1d1d; /* deep maroon text */
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    /* Sticky header */
+    header {
+      position: sticky;
+      top: 0;
+      background: #7f2935; /* maroon */
+      color: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 3px 8px rgba(127, 41, 53, 0.4);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header.scrolled {
+      background-color: #541e26;
+      box-shadow: 0 4px 12px rgba(84, 30, 38, 0.7);
+    }
+
+    .name-photo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .name-photo h1 {
+      margin: 0;
+      font-weight: 900;
+      font-size: 1.9rem;
+      letter-spacing: 1.5px;
+      user-select: none;
+    }
+    /* Increased profile image size */
+    .profile-img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 2px solid white;
+      object-fit: cover;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a,
+    #toggle-dark {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+    nav ul li a:hover,
+    #toggle-dark:hover {
+      background-color: rgba(255,255,255,0.25);
+    }
+
+    #toggle-dark {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Section styles */
+    section {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 2.1rem;
+      border-bottom: 3px solid #7f2935;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin: 0.8rem 0 1.6rem;
+      white-space: pre-line; /* preserve line breaks */
+    }
+
+    /* Skills list */
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+      padding: 0;
+      margin: 0;
+    }
+    .skills-list li {
+      background-color: #b36161;
+      color: #fff5f5;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(127, 41, 53, 0.6);
+      user-select: none;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    .skills-list li:hover {
+      transform: scale(1.1);
+    }
+
+    /* Projects */
+    .project {
+      background-color: #f5e6e6;
+      border-radius: 10px;
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 3px 8px rgba(127, 41, 53, 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    .project:hover {
+      box-shadow: 0 6px 16px rgba(127, 41, 53, 0.4);
+    }
+    .project h3 {
+      margin-top: 0;
+      color: #7f2935;
+      user-select: none;
+    }
+    .project p {
+      margin: 0.3rem 0;
+      color: #4b1d1d;
+    }
+    .project strong {
+      color: #541e26;
+    }
+
+    /* Achievements section */
+    #achievements {
+      background-color: #fdf0f0;
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin: 3rem auto;
+      max-width: 900px;
+      box-shadow: 0 3px 10px rgba(127, 41, 53, 0.2);
+    }
+    #achievements ul {
+      list-style: decimal inside;
+      padding-left: 0;
+      color: #4b1d1d;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      user-select: none;
+    }
+    #achievements li {
+      margin-bottom: 1rem;
+    }
+    #achievements strong {
+      color: #7f2935;
+      user-select: none;
+    }
+
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      gap: 1rem;
+      user-select: none;
+    }
+    input, textarea {
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      border-radius: 7px;
+      border: 2px solid #7f2935;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #541e26;
+      box-shadow: 0 0 8px #7f2935aa;
+    }
+    button[type="submit"] {
+      background-color: #7f2935;
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      padding: 0.8rem;
+      border-radius: 7px;
+      font-size: 1.15rem;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #541e26;
+    }
+    a[download] {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 7px;
+      text-decoration: none;
+      color: #7f2935;
+      border: 2px solid #7f2935;
+      font-weight: 700;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+    a[download]:hover {
+      background-color: #541e26;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+      color: #541e26;
+      user-select: none;
+      border-top: 1px solid #7f2935;
+      margin-top: 4rem;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background-color: #2c1216;
+      color: #f3d4d7;
+    }
+    body.dark-mode header {
+      background-color: #a33a47;
+      box-shadow: 0 3px 8px rgba(163, 58, 71, 0.6);
+    }
+    body.dark-mode header.scrolled {
+      background-color: #7f2935;
+      box-shadow: 0 4px 12px rgba(127, 41, 53, 0.7);
+    }
+    body.dark-mode h2 {
+      border-color: #e3a4ad;
+    }
+    body.dark-mode .skills-list li {
+      background-color: #a33a47;
+      color: #f3d4d7;
+      box-shadow: none;
+    }
+    body.dark-mode .project {
+      background-color: #4e222b;
+      color: #f3d4d7;
+      box-shadow: 0 6px 16px rgba(163, 58, 71, 0.5);
+    }
+    body.dark-mode .project h3 {
+      color: #f5a5b0;
+    }
+    /* UPDATED: Make project paragraph text brighter for readability */
+    body.dark-mode .project p {
+      color: #ffd6dc; /* lighter pink for better contrast */
+    }
+    body.dark-mode .project strong {
+      color: #f5a5b0;
+    }
+    body.dark-mode input, body.dark-mode textarea {
+      background-color: #5b2d34;
+      border-color: #e3a4ad;
+      color: #f3d4d7;
+    }
+    body.dark-mode input::placeholder, body.dark-mode textarea::placeholder {
+      color: #f5b5bd;
+    }
+    body.dark-mode input:focus, body.dark-mode textarea:focus {
+      background-color: #7f2935;
+      border-color: #f5a5b0;
+      box-shadow: 0 0 10px #f5a5b0cc;
+    }
+    body.dark-mode button[type="submit"] {
+      background-color: #e3a4ad;
+      color: #2c1216;
+    }
+    body.dark-mode button[type="submit"]:hover {
+      background-color: #a33a47;
+      color: white;
+    }
+    body.dark-mode a[download] {
+      border-color: #e3a4ad;
+      color: #f3d4d7;
+    }
+    body.dark-mode a[download]:hover {
+      background-color: #e3a4ad;
+      color: #2c1216;
+    }
+    body.dark-mode footer {
+      color: #f5b5bd;
+      border-top-color: #a33a47;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+      section {
+        margin: 2rem 1rem;
+      }
+      .skills-list {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="name-photo">
+      <h1>Filu Minta Tom</h1>
+      <img src="1Minnu.png"  class="profile-img" />
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button id="toggle-dark" aria-label="Toggle Dark Mode">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero" class="animate">
+    <h2>Student & UI/UX Enthusiast</h2>
+    <p>Hi, I'm Filu Minta Tom, a B.Tech Computer Science and Cybersecurity student with a passion for UI/UX design, Figma, and video editing. I've attended several national-level hackathons and competitions, completed a digital forensics internship, and even authored a research paper. I'm always exploring creative ways to blend tech with design!.</p>
+  </section>
+
+  <section id="about" class="animate">
+    <h2>About Me</h2>
+    <p>
+I'm Filu Minta Tom, a passionate and curious Computer Science and Cybersecurity student with a creative edge. I have a strong interest in UI/UX design, video editing, and app development, where I enjoy blending technical knowledge with visual creativity. I’ve taken part in national-level hackathons, worked on digital forensics projects during my internship, and authored a research paper that explores the intersection of cybersecurity and digital media.
+    </p>
+  </section>
+
+  <section id="skills" class="animate">
+    <h2>Skills</h2>
+    <ul class="skills-list">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Figma</li>
+      <li>Video Editing</li>
+      <li>Digital Forensics</li>
+      <li>UI/UX Design</li>
+    </ul>
+  </section>
+
+  <section id="projects" class="animate">
+    <h2>Projects</h2>
+    <div class="project">
+      <h3>Retail Reality</h3>
+      <p>A web app designed to enhance retail shopping experiences using augmented reality to visualize products..</p>
+      <p><strong>Tools:</strong> Concept development and research</p>
+    </div>
+    <div class="project">
+      <h3>MedMind</h3>
+      <p>A medical health app offering resources, self-assessment tools, and guided meditations..</p>
+      <p><strong>Tools:</strong> Figma</p>
+    </div>
+    <div class="project">
+      <h3>MindMarket</h3>
+      <p>A dynamic platform that connects creative minds, allowing users to share, trade, and develop innovative ideas into real-world solutions, fostering collaboration and growth..</p>
+      <p><strong>Tools:</strong>Concept development and research,GitHub repository </p>
+    </div>
+  </section>
+
+  <section id="achievements" class="animate">
+    <h2>Achievements</h2>
+    <ul>
+      <li><strong>National Hackathon Participant:</strong>Participated in multiple national-level hackathons, where I pitched innovative tech-based solutions and collaborated with diverse teams to solve real-world problems under time constraints.</li>
+      <li><strong>Research Paper Author:</strong>Successfully authored and presented a research paper during my first year, showcasing my early initiative in exploring academic and technical writing in the field of cybersecurity.</li>
+      <li><strong>Digital Forensics Internship:</strong>Completed a 1-month internship in digital forensics, gaining hands-on experience in investigating cyber threats, data recovery, and analyzing digital evidence.</li>
+      <li><strong>Co-Founder of MedMind:</strong>Conceptualized and developed MedMind, a medicine reminder app promoting personal health management.</li>
+      <li><strong> Project Developer:</strong>Worked on impactful projects like MindMarket, a platform for refining and sharing micro-ideas, and Retail Reality, aimed at enhancing the in-store shopping experience through tech-driven interaction and engagement.</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="animate">
+    <h2>Contact Me</h2>
+    <form id="contact-form" action="#" method="POST" novalidate>
+      <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name" />
+      <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email" />
+      <textarea name="message" placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <a href="Filu Minta Tom Resume.pdf" download="Filu Minta Tom Resume.pdf" aria-label="Download Resume">Download Resume</a>
+  </section>
+
+  <footer>
+    © 2025 Filu Minta Tom - All rights reserved.
+  </footer>
+
+  <script>
+    // Dark Mode Toggle
+    const toggleBtn = document.getElementById('toggle-dark');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      if(body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️';
+      } else {
+        toggleBtn.textContent = '🌙';
+      }
+    });
+
+    // Scroll header background change
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Animate sections on scroll
+    const sections = document.querySelectorAll('section.animate');
+    const revealSection = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if(top < triggerBottom) {
+          section.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealSection);
+    window.addEventListener('load', revealSection);
+  </script>
+</body>
+</html>
